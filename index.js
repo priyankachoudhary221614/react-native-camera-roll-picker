@@ -49,6 +49,8 @@ const nEveryRow = (data, n) => {
   return result;
 };
 
+export let requestAuthorisation = ""
+
 class CameraRollPicker extends Component {
   constructor(props) {
     super(props);
@@ -87,6 +89,7 @@ class CameraRollPicker extends Component {
   }
 
   appendImages(data) {
+    requestAuthorisation = "granted"
     const assets = data.edges;
     const newState = {
       loadingMore: false,
@@ -131,7 +134,12 @@ class CameraRollPicker extends Component {
     }
 
     CameraRoll.getPhotos(fetchParams)
-      .then(data => this.appendImages(data), e => console.log(e));
+    .then(data => this.appendImages(data), e => {this.requestAuth()})  
+  }
+
+  requestAuth() {
+    requestAuthorisation = "denied"
+    console.log("Access for gallery denied")
   }
 
   selectImage(image) {

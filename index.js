@@ -49,7 +49,6 @@ const nEveryRow = (data, n) => {
   return result;
 };
 
-export let requestAuthorisation = ""
 
 class CameraRollPicker extends Component {
   constructor(props) {
@@ -89,7 +88,6 @@ class CameraRollPicker extends Component {
   }
 
   appendImages(data) {
-    requestAuthorisation = "granted"
     const assets = data.edges;
     const newState = {
       loadingMore: false,
@@ -134,12 +132,18 @@ class CameraRollPicker extends Component {
     }
 
     CameraRoll.getPhotos(fetchParams)
-    .then(data => this.appendImages(data), e => {this.requestAuth()})  
+    .then(data => this.appendImages(data), e => this.permissionDenied(e))
   }
 
-  requestAuth() {
-    requestAuthorisation = "denied"
-    console.log("Access for gallery denied")
+
+  permissionDenied(error) {
+    const {onPermissionDenied} = this.props;
+    if (error.code === "E_PHOTO_LIBRARY_AUTH_DENIED") {
+      onPermissionDenied(error)
+    }
+    else{
+      console.log(error)
+    }
   }
 
   selectImage(image) {
@@ -290,6 +294,7 @@ CameraRollPicker.propTypes = {
   emptyText: PropTypes.string,
   emptyTextStyle: Text.propTypes.style,
   loader: PropTypes.node,
+  onPermissionDenied: PropTypes.func
 };
 
 CameraRollPicker.defaultProps = {
@@ -307,6 +312,7 @@ CameraRollPicker.defaultProps = {
     console.log(selectedImages);
   },
   emptyText: 'No photos.',
+  onPermissionDenied: (errorMessage) => {}
 };
 
 export default CameraRollPicker;

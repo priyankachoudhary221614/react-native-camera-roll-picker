@@ -139,7 +139,7 @@ class CameraRollPicker extends Component {
   permissionDenied(error) {
     const {onPermissionDenied} = this.props;
     if (error.code === "E_PHOTO_LIBRARY_AUTH_DENIED") {
-      onPermissionDenied(error)
+      onPermissionDenied(error.message)
     }
     else{
       console.log(error)

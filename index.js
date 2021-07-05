@@ -71,11 +71,11 @@ class CameraRollPicker extends Component {
     this.renderImage = this.renderImage.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.fetch();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       selected: nextProps.selected,
     });

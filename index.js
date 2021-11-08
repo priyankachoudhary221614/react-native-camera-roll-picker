@@ -312,7 +312,8 @@ CameraRollPicker.defaultProps = {
     console.log(selectedImages);
   },
   emptyText: 'No photos.',
-  onPermissionDenied: (errorMessage) => {}
+  onPermissionDenied: (errorMessage) => {},
+  include:["location", "imageSize"]
 };
 
 export default CameraRollPicker;

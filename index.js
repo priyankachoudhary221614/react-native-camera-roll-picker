@@ -114,12 +114,13 @@ class CameraRollPicker extends Component {
   }
 
   doFetch() {
-    const { groupTypes, assetType } = this.props;
+    const { groupTypes, assetType, include } = this.props;
 
     const fetchParams = {
       first: 100,
       groupTypes,
       assetType,
+      include,
     };
 
     if (Platform.OS === 'android') {
